@@ -52,17 +52,16 @@ function getAllProducts() {
     console.log(answers);
     var record;
     for(var i = 0; i < res.length; i++) {
-      if(res[i].item_id === + answers.item_id) {
+      if(res[i].item_id == answers.item_id) {
         record = res[i];
       }
     }
   //Positive answer
   //Total cost problem- Need to calculate and display total correctly...still having minor problems
   //declare variable prior to console log and use concatenation to add it to the string
-  var price = quantity*productData.price;  
-  console.log(record);
+
+  console.log(record)
     if(record.stock_quantity >= answers.quantity) {
-      console.log("We have that product available, your transaction total is" + ());
       //Use an SQL update to update the database w current stock levels
     connection.query(
       "UPDATE products SET ? WHERE ?",
@@ -77,6 +76,9 @@ function getAllProducts() {
         function(err, res) {
           console.log(res);
           console.log(res.affectedRows + " Your transaction is complete, product stock levels updated!\n");
+          var total = parseFloat(answers.quantity) * parseFloat(record.price);
+          console.log("We have that product available, your transaction total is: " + total);
+          getAllProducts();
           
         }
       );
@@ -84,6 +86,7 @@ function getAllProducts() {
     }
     else {
       console.log('Insufficient Quantity');
+      getAllProducts();
     }
    
     }
